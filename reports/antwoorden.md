@@ -15,6 +15,38 @@ De dropout staat op 0.5, hij heeft in een blog gelezen dat dit de beste settings
 - Wat vind je van de architectuur die hij heeft uitgekozen (een Neuraal netwerk met drie Linear layers)? Wat zijn sterke en zwakke kanten van een model als dit in het algemeen? En voor dit specifieke probleem?
 - Wat vind je van de keuzes die hij heeft gemaakt in de LinearConfig voor het aantal units ten opzichte van de data? En van de dropout?
 
+## ML: Antwoord 1a
+- Het lijkt een regressie probleem, maar het betreft een classificatie probleem, het voorspellen van 20 classes: cijfers 0 t/m 9 van mannen en vrouwen.
+- Gezien de gesproken cijfers met tijd te maken hebben gaat het om time series waarbij de volgordelijkheid erg van belang is. 3 dimensies (batch, steps, features)
+- Neuraal Netwerk met 3 lineaire lagen: lineair en activatie
+  * Lineair modellen (y = wx + b) zijn de simpelste beschikbare modellen.
+  * Ideaal om te gebruiken als baselinemodel.
+  * Eenvoudigheid van het model helpt bij het voorkomen van overfitten.
+  * Accuracy zal met dit model niet gemakkelijk te verhogen zijn doordat er relatief weinig features te trainen zijn.
+  * Relatief gemakkelijk uit te leggen, wat betekent dat het begrijpbaar is.
+  * Weinig lagen/complexiteit
+  * Het model heeft een snelle verwerkingstijd.
+  * Toepassing op minder complexe problemen.
+
+- Een model met 'geheugen' zou beter zijn gezien de volgordelijkheid van timeseries: denk hierbij aan RNN, LSTM en GRU.
+ Een regulier RNN model heeft hoogstwaarschijnlijk moeite met de volgordelijkheid, gezien het beperkte 'geheugen'. Hierdoor zou een LSTM of GRU model betere resultaten kunnen behalen.
+
+Keuze aantal units ten opzichte van de data:
+- input = 13
+- hidden1 = 100
+- hidden2 = 10
+- output = 20
+- dropout = 0,5
+
+- Dataset = 8800 (10 digits x 10 repetitions x 88 speakers) van 44 mannen en 44 vrouwen. Batchsize = 128
+
+Input komt overeen met het aantal attributen: 13. Deze attributen bestaan uit regels met timeseries van 13 Frequency Cepstral Coefficients (MFCCs).
+
+Door het aantal units eerste te vergroten, vervolgens te verkleinen en dan weer te vergroten om terug te gaan naar 20 classes is niet logisch. Het is logischer om van groot naar klein te werken, hierdoor dient de eerst laag het grootst te zijn. In deze situatie is de input 13 units, deze te vergroten naar een veelvoud van 2. Denk hierbij aan de volgende reeks die we ook hebben toegepast tijdens het handmatig hypertunen. Hierdoor is gemakkelijker om een passende range te vinden waarbij de units optimaal zijn: 8, 16, 32, 64, 128, 256 en 512. Als baseline zou ik in dit geval de eerste hidden layer de op 128 units hebben gezet, de tweede layer dus kleiner maken en op 64 units hebben gezet aangezien de output layer terug gaat naar 20 classes.
+
+
+
+
 ## 1b
 Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`) dan kun je zien dat het eerste dat hij doet `x.mean(dim=1)` is. 
 
