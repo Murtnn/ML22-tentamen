@@ -22,6 +22,7 @@ De dropout staat op 0.5, hij heeft in een blog gelezen dat dit de beste settings
   * Lineair modellen (y = wx + b) zijn de simpelste beschikbare modellen.
   * Ideaal om te gebruiken als baselinemodel.
   * Eenvoudigheid van het model helpt bij het voorkomen van overfitten.
+  * Door eenvoudigheid gaat deze underfitten op non-lineaire datasets. 
   * Accuracy zal met dit model niet gemakkelijk te verhogen zijn doordat er relatief weinig features te trainen zijn.
   * Relatief gemakkelijk uit te leggen, wat betekent dat het begrijpbaar is.
   * Weinig lagen/complexiteit
@@ -43,6 +44,16 @@ Keuze aantal units ten opzichte van de data:
 Input komt overeen met het aantal attributen: 13. Deze attributen bestaan uit regels met timeseries van 13 Frequency Cepstral Coefficients (MFCCs).
 
 Door het aantal units eerste te vergroten, vervolgens te verkleinen en dan weer te vergroten om terug te gaan naar 20 classes is niet logisch. Het is logischer om van groot naar klein te werken, hierdoor dient de eerst laag het grootst te zijn. In deze situatie is de input 13 units, deze te vergroten naar een veelvoud van 2. Denk hierbij aan de volgende reeks die we ook hebben toegepast tijdens het handmatig hypertunen. Hierdoor is gemakkelijker om een passende range te vinden waarbij de units optimaal zijn: 8, 16, 32, 64, 128, 256 en 512. Als baseline zou ik in dit geval de eerste hidden layer de op 128 units hebben gezet, de tweede layer dus kleiner maken en op 64 units hebben gezet aangezien de output layer terug gaat naar 20 classes.
+
+Daarnaast wordt er gebruik gemaakt van een dropout van 0,5 wat voor een relatief kleine dataset aan de hoge kant is. Door de dropout wordt er random in iedere batch de helft van de gegevens tussen de hiddenlayers weggegooid. Hierdoor kunnen units die aan het overfitten zijn verminderd worden, wat het risico op overfitten verkleind. Ik zou op basis van onderbuik gevoel de dropout verlagen naar 0,3.
+
+Het model zou de volgende settings krijgen:
+- input = 13
+- hidden1 = 128
+- hidden2 = 64
+- output = 20
+- dropout = 0,3
+
 
 
 
