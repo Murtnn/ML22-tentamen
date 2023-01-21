@@ -97,6 +97,7 @@ Educated guess: op basis van oefening les, onderbuikt.. NOG VERDER TOELICHTEN!
 - Hidden size: 64
 - Aantal lagen: 4
 - Dropout: 0.3
+  - Geen dropout van 0.5 doordat er dan te veel data van de kleine dataset wordt weggegooid.
 - Batchsize: 64
 - Learning rate: 1e-3
   - Gedurende de module de best werkende learningrate.
