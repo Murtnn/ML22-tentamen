@@ -32,7 +32,7 @@ Zwakke punten:
   * Accuracy zal met dit model niet gemakkelijk te verhogen zijn doordat er relatief weinig features te trainen zijn.
   * Werkt niet voor grote hoeveelheden data die veel features hebben.
 
-Gezien de gesproken cijfers met tijd te maken hebben gaat het om timeseries waarbij de volgordelijkheid erg van belang is. Een model met 'geheugen' zou beter zijn gezien de volgordelijkheid van timeseries: denk hierbij aan RNN, LSTM en GRU. Een regulier RNN model heeft hoogstwaarschijnlijk moeite met de volgordelijkheid, gezien het beperkte 'geheugen'. Hierdoor zou een LSTM of GRU model betere resultaten kunnen behalen.
+Gezien de gesproken cijfers met tijd te maken hebben gaat het om timeseries waarbij de volgordelijkheid erg van belang is. Een model met 'geheugen' zou beter zijn gezien de volgordelijkheid van timeseries: denk hierbij aan Simple RNN, LSTM en GRU. Een Simple RNN model heeft hoogstwaarschijnlijk moeite met de volgordelijkheid, gezien het beperkte 'geheugen'. Hierdoor zou een LSTM of GRU model betere resultaten kunnen behalen.
 
 Keuze aantal units ten opzichte van de data:
 - input = 13
@@ -63,7 +63,9 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
 # ML: Antwoord 1b
-Het effect van 'x.mean(dim=1)' is dat het aantal dimensies wordt gereduceerd. De tijdsdimensie kan verschillende lengtes hebben, het ene cijfer duurt langer om uit gesproken dan de ander. Door alleen het gemiddelde te nemen wordt de tijdsdimensie gereduceerd, hadden we dit niet gedaan dan had het neurale netwerk de gehele tijdserie van elke sample moeten verwerken wat er voorzorgt dat het trainingsproces veel langzamer wordt. Het netwerk krijgt te veel features om te verwerken waardoor het moeilijker wordt om van de data te leren. Tevens wordt de het toepassen van x.mean(dim=1) ook de ruis verminderd, die ontstaat door de verschillende lengtes van de tijdsdimensie.
+Het effect van 'x.mean(dim=1)' is dat het aantal dimensies wordt gereduceerd. De tijdsdimensie kan verschillende lengtes hebben, het ene cijfer duurt langer om uit gesproken te worden dan de ander. Door alleen het gemiddelde te nemen wordt de tijdsdimensie gereduceerd, hadden we dit niet gedaan dan had het neurale netwerk de gehele tijdserie van elke sample moeten verwerken wat er voorzorgt dat het trainingsproces veel langzamer wordt. Het netwerk krijgt te veel features om te verwerken waardoor het moeilijker wordt om van de data te leren. Tevens wordt de het toepassen van x.mean(dim=1) ook de ruis verminderd, die ontstaat door de verschillende lengtes van de tijdsdimensie.
+
+Een alternatief voor het reduceren van de dimensies is het toepassen van een flatten. Door flatten wordt alle informatie uit de dimensies platgeslagen tot een reeks. Echter door het toepassen van flatten gaan er veel kenmerken van tijdserie verloren. Daarom is het toepassen van flatten niet optimaal voor het verwerken van tijdseries.
 
 ### 1c
 Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitleggen wat een betere architectuur zou zijn.
@@ -71,6 +73,37 @@ Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitlegg
 - Beschrijf de architecturen die je kunt overwegen voor een probleem als dit. Het is voldoende als je beschrijft welke layers in welke combinaties je zou kunnen gebruiken.
 - Geef vervolgens een indicatie en motivatie voor het aantal units/filters/kernelsize etc voor elke laag die je gebruikt, en hoe je omgaat met overgangen (bv van 3 naar 2 dimensies). Een indicatie is bijvoorbeeld een educated guess voor een aantal units, plus een boven en ondergrens voor het aantal units. Met een motivatie laat je zien dat jouw keuze niet een random selectie is, maar dat je 1) andere problemen hebt gezien en dit probleem daartegen kunt afzetten en 2) een besef hebt van de consquenties van het kiezen van een range.
 - Geef aan wat jij verwacht dat de meest veelbelovende architectuur is, en waarom (opnieuw, laat zien dat je niet random getallen noemt, of keuzes maakt, maar dat jij je keuze baseert op ervaring die je hebt opgedaan met andere problemen).
+
+# ML: Antwoord 1c
+De verschillende architecturen die dit problemen zijn zoals eerder benoemd de volgende:
+- Simple RNN: Basis model, echter moeite met geheugen.
+- LSTM: Heeft meer parameters met 3 gates en 2 hidden states, dus een meer complex model.
+- GRU: Versimpelde versie van LSTM met 2 gates en 1 hidden states.
+
+<figure>
+  <p align = "center">
+    <img src="img/Architecturen.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 1c. Overzicht Architecturen</b>
+    </figcaption>
+  </p>
+</figure>
+
+Deze architecturen zijn het best toepasbaar voor timeseries data aangezien ze beschikken over geheugen.
+
+In deze casus is mijn verwachting dat het GRU model het beste is, gezien dat een Simple RNN beperking in het gebruik van geheugen heeft. Een LSTM model is te complex voor deze relatief simpele dataset, echter is het geheugen wel veel beter ten opzichte van een Simple RNN Model. Gezien GRU de versimpelde versie van LSTM, zie ik GRU als het meest veelbelovende model.
+
+Educated guess: op basis van oefening les, onderbuikt.. NOG VERDER TOELICHTEN!
+- Hidden size: 64
+- Aantal lagen: 4
+- Dropout: 0.3
+- Batchsize: 64
+- Learning rate: 1e-3
+  - Gedurende de module de best werkende learningrate.
+- Optimizer: Adam
+  - Vaak de beste optimzer in combinatie met learning rate van 1e -3.
+- Loss fucntie: CrossEntropyLoss
+  - Gezien het om classificatie is deze loss functie het beste.
 
 ### 1d
 Implementeer jouw veelbelovende model: 
