@@ -28,7 +28,7 @@ if __name__ == "__main__":
         model = GRUmodel(config.dict())  # type: ignore
 
         trainedmodel = trainloop(
-            epochs=10,
+            epochs=50,
             model=model,  # type: ignore
             optimizer=torch.optim.Adam,
             learning_rate=1e-3,

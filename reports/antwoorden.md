@@ -98,7 +98,7 @@ Educated guess: op basis van oefening les, onderbuikt.. NOG VERDER TOELICHTEN!
 - Aantal lagen: 4
 - Dropout: 0.3
   - Geen dropout van 0.5 doordat er dan te veel data van de kleine dataset wordt weggegooid.
-- Batchsize: 64
+- Batchsize: 128
 - Learning rate: 1e-3
   - Gedurende de module de best werkende learningrate.
 - Optimizer: Adam
