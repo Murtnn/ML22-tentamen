@@ -62,6 +62,9 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Hoe had hij dit ook kunnen oplossen?
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
+# ML: Antwoord 1b
+Het effect van 'x.mean(dim=1)' is dat het aantal dimensies wordt gereduceerd. De tijdsdimensie kan verschillende lengtes hebben, het ene cijfer duurt langer om uit gesproken dan de ander. Door alleen het gemiddelde te nemen wordt de tijdsdimensie gereduceerd, hadden we dit niet gedaan dan had het neurale netwerk de gehele tijdserie van elke sample moeten verwerken wat er voorzorgt dat het trainingsproces veel langzamer wordt. Het netwerk krijgt te veel features om te verwerken waardoor het moeilijker wordt om van de data te leren. Tevens wordt de het toepassen van x.mean(dim=1) ook de ruis verminderd, die ontstaat door de verschillende lengtes van de tijdsdimensie.
+
 ### 1c
 Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitleggen wat een betere architectuur zou zijn.
 
