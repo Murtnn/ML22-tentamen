@@ -4,6 +4,9 @@
 run:	
 	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/01_model_design.py
 
+runGRU:	
+	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/01_model_GRU_design.py
+
 tune: 
 	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/02_tune.py
 
