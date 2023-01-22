@@ -193,7 +193,9 @@ class GRUmodelSearchSpace(BaseSearchSpace):
     dropout: (0.0, 0.3)
 
 Search gaat nu nog erg random, verder structureren. Tevens kijken of ik batchsize als variabele parameter kan toevoegen, ik verwacht dat dit ook impact heeft op het resultaat. Batch size: de totale dataset is 8800, batchsize default is 128, lijkt mij aan de hoge kant voor zon kleine dataset.
-Door hiddensize te structeren door stappen van 32 te laten nemen, numlayers stappen van 2 en dropout range verkleinen en stappen van 0.05.
+Door hiddensize te structeren door stappen van 32 te laten nemen, numlayers stappen van 2 en dropout range verkleinen en stappen van 0.05. Vervolgens experiment op 10 epochs gerund: train_2023-01-22_16-59-21
+Deze geeft aan dat op 10 epochs de volgende settings optimaal zijn: hidden size 224, num layers 6 en dropout 0.0. Dropout van 0.0 is niet logisch, gezien de resultaten van het handmatig hypertunen op 0.3 en accuracy van bijna 97%.Hierom met de volgende settings opnieuw laten hypertunen:
+hidden size tussen 220 en 260 met stappen van 10, numlayers tussen 4 en 6 en dropout tussen 0.1 en 0.3 met stappen van 0.05. Epochs op 10. In dit experiment ook de batchsize meegenomen: tussen 64 en 182 met stappen van 32.
 
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
