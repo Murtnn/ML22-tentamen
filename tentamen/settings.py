@@ -61,3 +61,11 @@ class GRUmodelConfig(BaseSearchSpace):
     hidden_size: int
     num_layers: int
     dropout: float
+
+
+class GRUmodelSearchSpace(BaseSearchSpace):
+    hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
+    num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 6)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.0, 0.3)
+
+#LET OP: onderste class toegevoegd met parameters obv 1d.
