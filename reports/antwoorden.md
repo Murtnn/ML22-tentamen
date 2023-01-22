@@ -219,12 +219,12 @@ class GRUmodelSearchSpace(BaseSearchSpace):
 Search gaat nu nog erg random, dit ga ik vervolgens verder structureren. Tevens kijken of ik batchsize als variabele parameter kan toevoegen, ik verwacht dat dit ook impact heeft op het resultaat. Batch size: de totale dataset is 8800, batchsize default is 128, lijkt mij aan de hoge kant voor zon kleine dataset.
 Door hiddensize te structeren door stappen van 32 te laten nemen, numlayers stappen van 2 en dropout range verkleinen en stappen van 0.05. Vervolgens experiment op 10 epochs gerund: train_2023-01-22_16-59-21
 Deze geeft aan dat op 10 epochs de volgende settings optimaal zijn: hidden size 224, num layers 6 en dropout 0.0. Dropout van 0.0 is niet logisch, gezien de resultaten van het handmatig hypertunen op 0.3 en accuracy van bijna 97%.Hierom met de volgende settings opnieuw laten hypertunen:
-hidden size tussen 200 en 260 met stappen van 10, numlayers tussen 4 en 6 en dropout tussen 0.1 en 0.3 met stappen van 0.05. Epochs op 10. In dit experiment ook de batchsize meegenomen: tussen 64 en 182 met stappen van 16.
+hidden size tussen 200 en 260 met stappen van 10, numlayers tussen 4 en 6 en dropout tussen 0.1 en 0.4 met stappen van 0.05. Epochs op 10. In dit experiment ook de batchsize meegenomen: tussen 64 en 182 met stappen van 16.
 
 class GRUmodelSearchSpace(BaseSearchSpace):
     hidden_size: Union[int, SAMPLE_INT] = tune.qrandint(200, 260, 10)
     num_layers: Union[int, SAMPLE_INT] = tune.qrandint(4, 6, 1)
-    dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.3, 0.05)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.4, 0.05)
     batchsize: Union[int, SAMPLE_INT] = tune.qrandint(64, 182, 16)
 
 ### 2b

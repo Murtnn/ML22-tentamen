@@ -66,7 +66,7 @@ class GRUmodelConfig(BaseSearchSpace):
 class GRUmodelSearchSpace(BaseSearchSpace):
     hidden_size: Union[int, SAMPLE_INT] = tune.qrandint(200, 260, 10)
     num_layers: Union[int, SAMPLE_INT] = tune.qrandint(4, 6, 1)
-    dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.3, 0.05)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.4, 0.05)
     batchsize: Union[int, SAMPLE_INT] = tune.qrandint(64, 182, 16)
 
 #LET OP: onderste class toegevoegd met parameters obv 1d.
