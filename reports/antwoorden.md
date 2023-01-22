@@ -183,6 +183,16 @@ Implementeer de hypertuning voor jouw architectuur:
 - maak een zoekruimte aan met behulp van pydantic (naar het voorbeeld van LinearSearchSpace), maar pas het aan voor jouw model.
 - Licht je keuzes toe: wat hypertune je, en wat niet? Waarom? En in welke ranges zoek je, en waarom? Zie ook de [docs van ray over search space](https://docs.ray.io/en/latest/tune/api_docs/search_space.html#tune-sample-docs) en voor [rondom search algoritmes](https://docs.ray.io/en/latest/tune/api_docs/suggestion.html#bohb-tune-search-bohb-tunebohb) voor meer opties en voorbeelden.
 
+# ML: Antwoord 2a
+Geen aanpassing aan het model gedaan naar aanleiding van vraag 1d, GRUmodel werkt goed voor deze dataset.
+Om de basiscode in file '02_tune.py' voor het lineaire model te behouden heb ik hiervan een kopie gemaakt en deze gewijzigd zodat deze kan runnen op GRUmodel. Ook weer hiervoor een nieuw command aangemaakt in de Makefile: ' make tuneGRU'. In de settingsfile een GRUmodelSearchSpace toegevoegd met searchspace op basis van het handmatig hypertunen.
+
+class GRUmodelSearchSpace(BaseSearchSpace):
+    hidden_size: (128, 256)
+    num_layers: (2, 6)
+    dropout: (0.0, 0.3)
+
+
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
 - reflecteer op de hypertuning. Wat werkt wel, wat werkt niet, wat vind je verrassend, wat zijn trade-offs die je ziet in de hypertuning, wat zijn afwegingen bij het kiezen van een uiteindelijke hyperparametersetting.
