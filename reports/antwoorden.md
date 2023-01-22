@@ -142,7 +142,7 @@ Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de 
 - Aantal lagen = 4
 - Dropout = 0.3
 
-Wat valt op: Na 13 epochs zit de accuracy al boven de 90%. Vervolgens is er na 25/30 epochs al een accuracy van 95% behaald. Dit betreft al een hele goede accuracy. Daarnaast valt op dat de learningrate na 40 epochts terugvalt, wat betekent dat het model op die learningrate niets meer aan het leren was. Verder positief is dat het model is niet aan het overfitten is: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
+Wat valt op: Na 13 epochs zit de accuracy al boven de 90%. Vervolgens is er na 25/30 epochs al een accuracy van 95% behaald. Dit betreft al een hele goede accuracy. Daarnaast valt op dat de learningrate na 40 epochts terugvalt, wat betekent dat het model op die learningrate niets meer aan het leren was. Het model heeft ingestelde patience van 10, wat betekent dat als het model gedurende 10 epochs niets leert het de learningrate laat zakken. Verder positief is dat het model is niet aan het overfitten is: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
 
 ### Test1d.2 > Logs/20230122-1322
 - Hidden size = 128
@@ -192,6 +192,8 @@ class GRUmodelSearchSpace(BaseSearchSpace):
     num_layers: (2, 6)
     dropout: (0.0, 0.3)
 
+Search gaat nu nog erg random, verder structureren. Tevens kijken of ik batchsize als variabele parameter kan toevoegen, ik verwacht dat dit ook impact heeft op het resultaat. Batch size: de totale dataset is 8800, batchsize default is 128, lijkt mij aan de hoge kant voor zon kleine dataset.
+Door hiddensize te structeren door stappen van 32 te laten nemen, numlayers stappen van 2 en dropout range verkleinen en stappen van 0.05.
 
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
