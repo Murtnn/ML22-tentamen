@@ -122,7 +122,7 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
 
 <figure>
   <p align = "center">
-    <img src="img/motivational.png" style="width:50%">
+    <img src="img/motivational.png" style="width:25%">
     <figcaption align="center">
       <b> Fig 1.Een motivational poster voor studenten Machine Learning (Stable Diffusion)</b>
     </figcaption>
@@ -136,7 +136,7 @@ In model.py file heb ik nieuw model toegevoegd: class 'GRUmodel', hierin is de g
 - Optimizer = Adam
 - Loss = CrossEntropyLoss
 
-### Test1d.1 Logs/20230121-2220
+### Experiment 1d.1 Logs/20230121-2220 > Gele lijn in onderstaande figuren.
 Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de educated guess: 
 - Hidden size = 64
 - Aantal lagen = 4
@@ -144,32 +144,32 @@ Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de 
 
 Wat valt op: Na 13 epochs zit de accuracy al boven de 90%. Vervolgens is er na 25/30 epochs al een accuracy van 95% behaald. Dit betreft al een hele goede accuracy. Daarnaast valt op dat de learningrate na 40 epochts terugvalt, wat betekent dat het model op die learningrate niets meer aan het leren was. Het model heeft ingestelde patience van 10, wat betekent dat als het model gedurende 10 epochs niets leert het de learningrate laat zakken. Verder positief is dat het model is niet aan het overfitten is: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
 
-### Test1d.2 > Logs/20230122-1322
+### Experiment 1d.2 > Logs/20230122-1322 > Paarse lijn in onderstaande figuren.
 - Hidden size = 128
 - Aantal lagen = 6
 - Dropout = 0.3
 
-Wat valt op: De tweede versie van het GRUmodel lijkt nog sneller en beter te leren dan de eerste educated guess. Na slechts 8 epochs zit de accuracy al boven de 90%. Uiteindelijk haalt het model een accuracy van rond de 96 a 97%. Net als in de eerste test wordt opgegeven moment de learningrate verlaagd tot 0.0009 om verder te kunnen leren. Door dat dit model sneller leert, wordt de learningrate al bij epoch 32 verlaagd. Net als in de eerste run is het model niet aan het overfitten, wel is te zien dat deze run relatief minder aan het overfitten is, ookal gebeurd het nu bijna niet. Een grotere hidden size en aantal lagen lijkt goed te werken om de accuracy te verhogen. 
+Wat valt op: De tweede versie van het GRUmodel lijkt nog sneller en beter te leren dan de eerste educated guess. Na slechts 8 epochs zit de accuracy al boven de 90%. Uiteindelijk haalt het model een accuracy van rond de 96 a 97%. Net als in de eerste experiment wordt opgegeven moment de learningrate verlaagd tot 0.0009 om verder te kunnen leren. Door dat dit model sneller leert, wordt de learningrate al bij epoch 32 verlaagd. Net als in de eerste run is het model niet aan het overfitten, wel is te zien dat deze run relatief minder aan het overfitten is, ookal gebeurd het nu bijna niet. Een grotere hidden size en aantal lagen lijkt goed te werken om de accuracy te verhogen. 
 
-### Test1d.3 > Logs/20230122-1411 > Test afgebroken
+### Experiment 1d.3 > Logs/20230122-1411 > Experiment afgebroken > Groene lijn in onderstaande figuren.
 - Hidden size = 256
 - Aantal lagen = 8
 - Dropout = 0.3
 
-Naar aanleiding van Test 1d.2 lijkt het erop dat door middel van het verhogen van de hidden size en het aantal lagen het model beter werd. Geen aanpassingen op de dropout gedaan. Echter werd het model hierdoor erg traag, om deze reden de run afgebroken. Op basis van de eerste paar epochs leek het model wel sneller te leren dan de twee voorgaande versies. Doordat de run is afgebroken, heb ik toch besloten om een volledige derde run te doen met de beste settings tot nu toe in combinatie met een verhoging van de dropout.
+Naar aanleiding van experiment 1d.2 lijkt het erop dat door middel van het verhogen van de hidden size en het aantal lagen het model beter werd. Geen aanpassingen op de dropout gedaan. Echter werd het model hierdoor erg traag, om deze reden de run afgebroken. Op basis van de eerste paar epochs leek het model wel sneller te leren dan de twee voorgaande versies. Doordat de run is afgebroken, heb ik toch besloten om een volledige derde run te doen met de beste settings tot nu toe in combinatie met een verhoging van de dropout.
 
-### Test1d.4 > Logs/20230122-1420
+### Experiment 1d.4 > Logs/20230122-1420 > Oranje lijn in onderstaande figuren.
 - Hidden size = 128
 - Aantal lagen = 6
 - Dropout = 0.5
 
-Net als voorgaande test runs wordt er goede accuracy gehaald van 95%. Het model duurt er een aantal langer over om boven de 90% te doen dan Test1d.2. Qua leervermogen worden wordt de learningrate na 39 epochs verlaagd, het model is dus later uitgeleerd. Ook met deze settings is model niet aan het overfitten. Wel kan er gesteld worden dat een lagere dropout beter is.
+Net als voorgaande experimenten wordt er goede accuracy gehaald van 95%. Het model duurt er een aantal langer over om boven de 90% te doen dan experiment 1d.2. Qua leervermogen worden wordt de learningrate na 39 epochs verlaagd, het model is dus later uitgeleerd. Ook met deze settings is model niet aan het overfitten. Wel kan er gesteld worden dat een lagere dropout beter is.
 
-Mijn conclusie op basis van deze tests valt het volgende mij op. Van alle modellen kwam de accuracy al redelijk snel boven de 95%, dit had ik niet verwacht aangezien er bij de eerdere opdracht gesteld werd dan een accuracy boven de 93% al goed is. Wat blijkt dat meer lagen zorgen voor een beter resultaat maar wel een slechtere performance (run time). Voor het opvolgend hypertunen ga ik dus niet meer lagen toevoegen dan 6 gezien het anders te veel tijd gaat kosten. Wanneer er meer tijd was zou ik het zeker interessant vinden om dit verder te onderzoeken. Wat tevens op viel dat mijn eerste educated guess aardig goed was qua parameters, echter lijkt een hogere hidden size beter. Hiermee ga ik verder experimenteren tijdens het hypertunen.
+Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle modellen kwam de accuracy al redelijk snel boven de 95%, dit had ik niet verwacht aangezien er bij de eerdere opdracht gesteld werd dan een accuracy boven de 93% al goed is. Wat blijkt dat meer lagen zorgen voor een beter resultaat maar wel een slechtere performance (run time). Voor het opvolgend hypertunen ga ik dus niet meer lagen toevoegen dan 6 gezien het anders te veel tijd gaat kosten. Wanneer er meer tijd was zou ik het zeker interessant vinden om dit verder te onderzoeken. Wat tevens op viel dat mijn eerste educated guess aardig goed was qua parameters, echter lijkt een hogere hidden size beter. Hiermee ga ik verder experimenteren tijdens het hypertunen. Naar aanleiding van bovenstaande bevindingen, worden deze hieronder visueel weergegeven.
 
 <figure>
   <p align = "center">
-    <img src="img/HandmatigMetricAccuracy.png" style="width:50%">
+    <img src="img/HandmatigMetricAccuracy.png" style="width:75%">
     <figcaption align="center">
       <b> Fig 1d.1 Metric Accuracy.</b>
     </figcaption>
@@ -178,7 +178,7 @@ Mijn conclusie op basis van deze tests valt het volgende mij op. Van alle modell
 
 <figure>
   <p align = "center">
-    <img src="img/HandmatigLearningRate.png" style="width:50%">
+    <img src="img/HandmatigLearningRate.png" style="width:75%">
     <figcaption align="center">
       <b> Fig 1d.2 Drop LearningRates.</b>
     </figcaption>
@@ -188,7 +188,7 @@ Mijn conclusie op basis van deze tests valt het volgende mij op. Van alle modell
 
 <figure>
   <p align = "center">
-    <img src="img/HandmatigLoss.png" style="width:50%">
+    <img src="img/HandmatigLoss.png" style="width:75%">
     <figcaption align="center">
       <b> Fig 1d.3 LossTrain/LossTest.</b>
     </figcaption>
@@ -209,17 +209,23 @@ Implementeer de hypertuning voor jouw architectuur:
 
 # ML: Antwoord 2a
 Geen aanpassing aan het model gedaan naar aanleiding van vraag 1d, GRUmodel werkt goed voor deze dataset.
-Om de basiscode in file '02_tune.py' voor het lineaire model te behouden heb ik hiervan een kopie gemaakt en deze gewijzigd zodat deze kan runnen op GRUmodel. Ook weer hiervoor een nieuw command aangemaakt in de Makefile: ' make tuneGRU'. In de settingsfile een GRUmodelSearchSpace toegevoegd met searchspace op basis van het handmatig hypertunen.
+Om de basiscode in file '02_tune.py' voor het lineaire model te behouden heb ik hiervan een kopie gemaakt en deze gewijzigd zodat deze kan runnen op GRUmodel. Ook weer hiervoor een nieuw command aangemaakt in de Makefile: 'make tuneGRU'. In de settingsfile een GRUmodelSearchSpace toegevoegd met searchspace op basis van het handmatig hypertunen.
 
 class GRUmodelSearchSpace(BaseSearchSpace):
     hidden_size: (128, 256)
     num_layers: (2, 6)
     dropout: (0.0, 0.3)
 
-Search gaat nu nog erg random, verder structureren. Tevens kijken of ik batchsize als variabele parameter kan toevoegen, ik verwacht dat dit ook impact heeft op het resultaat. Batch size: de totale dataset is 8800, batchsize default is 128, lijkt mij aan de hoge kant voor zon kleine dataset.
+Search gaat nu nog erg random, dit ga ik vervolgens verder structureren. Tevens kijken of ik batchsize als variabele parameter kan toevoegen, ik verwacht dat dit ook impact heeft op het resultaat. Batch size: de totale dataset is 8800, batchsize default is 128, lijkt mij aan de hoge kant voor zon kleine dataset.
 Door hiddensize te structeren door stappen van 32 te laten nemen, numlayers stappen van 2 en dropout range verkleinen en stappen van 0.05. Vervolgens experiment op 10 epochs gerund: train_2023-01-22_16-59-21
 Deze geeft aan dat op 10 epochs de volgende settings optimaal zijn: hidden size 224, num layers 6 en dropout 0.0. Dropout van 0.0 is niet logisch, gezien de resultaten van het handmatig hypertunen op 0.3 en accuracy van bijna 97%.Hierom met de volgende settings opnieuw laten hypertunen:
-hidden size tussen 220 en 260 met stappen van 10, numlayers tussen 4 en 6 en dropout tussen 0.1 en 0.3 met stappen van 0.05. Epochs op 10. In dit experiment ook de batchsize meegenomen: tussen 64 en 182 met stappen van 32.
+hidden size tussen 200 en 260 met stappen van 10, numlayers tussen 4 en 6 en dropout tussen 0.1 en 0.3 met stappen van 0.05. Epochs op 10. In dit experiment ook de batchsize meegenomen: tussen 64 en 182 met stappen van 16.
+
+class GRUmodelSearchSpace(BaseSearchSpace):
+    hidden_size: Union[int, SAMPLE_INT] = tune.qrandint(200, 260, 10)
+    num_layers: Union[int, SAMPLE_INT] = tune.qrandint(4, 6, 1)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.3, 0.05)
+    batchsize: Union[int, SAMPLE_INT] = tune.qrandint(64, 182, 16)
 
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
