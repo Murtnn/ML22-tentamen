@@ -146,7 +146,7 @@ Na ongeveer 25/30 epochs is er al een accuracy van 95% behaald.
 Learningrate valt na 40 epochts helemaal terug, wat betekent dat het model op die learningrate niets meer aan het leren was.
 Model is niet aan het overfitten: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
 
-### Test1d.2
+### Test1d.2 > Logs/20230122-1322
 - Hidden size = 128
 - Aantal lagen = 6
 - Dropout = 0.3
