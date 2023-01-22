@@ -167,7 +167,6 @@ Net als voorgaande test runs wordt er goede accuracy gehaald van 95%. Het model 
 
 Mijn conclusie op basis van deze tests valt het volgende mij op. Van alle modellen kwam de accuracy al redelijk snel boven de 95%, dit had ik niet verwacht aangezien er bij de eerdere opdracht gesteld werd dan een accuracy boven de 93% al goed is. Wat blijkt dat meer lagen zorgen voor een beter resultaat maar wel een slechtere performance (run time). Voor het opvolgend hypertunen ga ik dus niet meer lagen toevoegen dan 6 gezien het anders te veel tijd gaat kosten. Wanneer er meer tijd was zou ik het zeker interessant vinden om dit verder te onderzoeken. Wat tevens op viel dat mijn eerste educated guess aardig goed was qua parameters, echter lijkt een hogere hidden size beter. Hiermee ga ik verder experimenteren tijdens het hypertunen.
 
-VISUALS NOG TOEVOEGEN UIT TENSORBOARD!
 <figure>
   <p align = "center">
     <img src="img/HandmatigMetricAccuracy.png" style="width:50%">
