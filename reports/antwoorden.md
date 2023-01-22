@@ -95,15 +95,18 @@ In deze casus is mijn verwachting dat het GRU model het beste is, gezien dat een
 
 Educated guess: op basis van oefening les, onderbuikt.. NOG VERDER TOELICHTEN!
 - Hidden size: 64
+  - Gezien er meerdere lagen in het model zitten had ik een onderbuik gevoel dat de hidden size relatief klein kon zijn.
 - Aantal lagen: 4
+  - Op basis van de oefeningen uit de les in combinatie met compacte dataset zou dit voldoende moeten zijn met 4 lagen die verder getraind kunnen worden.
 - Dropout: 0.3
-  - Geen dropout van 0.5 doordat er dan te veel data van de kleine dataset wordt weggegooid.
-- Batchsize: 128
+  - Geen dropout van 0.5 doordat er dan mogelijk te veel data van de kleine dataset wordt weggegooid.
+- Batchsize: 128 
+  - (default van eerste model, zal in hypertunen gaan varieren)
 - Learning rate: 1e-3
   - Gedurende de module de best werkende learningrate.
 - Optimizer: Adam
   - Vaak de beste optimzer in combinatie met learning rate van 1e -3.
-- Loss fucntie: CrossEntropyLoss
+- Loss functie: CrossEntropyLoss
   - Gezien het om classificatie is deze loss functie het beste.
 
 ### 1d
@@ -125,6 +128,30 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
     </figcaption>
   </p>
 </figure>
+
+# ML: Antwoord 1d
+In model.py file heb ik nieuw model toegevoegd: class 'GRUmodel', hierin is de gebruikte architectuur te vinden. Tevens heb ik in de settings.py file de config voor het model toegevoegd: class 'GRUmodelConfig', hierin worden het type van de verwachtte input geconfigureerd. Om het GRUmodel te runnen en de architectuur van het initiele model(01_model_design.py) te behouden heb ik een nieuw script aangemaakt (01_model_GRU_design.py). Om dit model losstaand van het eerste model te laten runnen heb ik de Makefile moeten aanpassen zodat ik een 'make' commando kon geven voor alle dit model: 'make runGRU'. Voor het handmatig hypertunen ben ik gaan experimenteren met de volgende parameters: hidden_size, aantal lagen en dropout. De overige parameters hebben de volgende default settings van mij meegekregen:
+- Batchsize = 128
+- Learningrate = 1e -3
+- Optimizer = Adam
+- Loss = CrossEntropyLoss
+
+### Test1d.1 Logs/20230121-2220
+Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de educated guess: 
+- Hidden size = 64
+- Aantal lagen = 4
+- Dropout = 0.3
+
+Na ongeveer 25/30 epochs is er al een accuracy van 95% behaald.
+Learningrate valt na 40 epochts helemaal terug, wat betekent dat het model op die learningrate niets meer aan het leren was.
+Model is niet aan het overfitten: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
+
+### Test1d.2
+- Hidden size = 128
+- Aantal lagen = 6
+- Dropout = 0.3
+
+
 
 ## Vraag 2
 Een andere collega heeft alvast een hypertuning opgezet in `dev/scripts/02_tune.py`.
@@ -151,7 +178,7 @@ Importeer de afbeeldingen in jouw antwoorden, reflecteer op je experiment, en ge
 ### 3a
 - fork deze repository.
 - Zorg voor nette code. Als je nu `make format && make lint` runt, zie je dat alles ok is. Hoewel het in sommige gevallen prima is om een ignore toe te voegen, is de bedoeling dat je zorgt dat je code zoveel als mogelijk de richtlijnen volgt van de linters.
-- We werken sinds 22 november met git, en ik heb een `git crash coruse.pdf` gedeeld in les 2. Laat zien dat je in git kunt werken, door een git repo aan te maken en jouw code daarheen te pushen. Volg de vuistregel dat je 1) vaak (ruwweg elke dertig minuten aan code) commits doet 2) kleine, logische chunks van code/files samenvoegt in een commit 3) geef duidelijke beschrijvende namen voor je commit messages
+- We werken sinds 22 november met git, en ik heb een `git crash course.pdf` gedeeld in les 2. Laat zien dat je in git kunt werken, door een git repo aan te maken en jouw code daarheen te pushen. Volg de vuistregel dat je 1) vaak (ruwweg elke dertig minuten aan code) commits doet 2) kleine, logische chunks van code/files samenvoegt in een commit 3) geef duidelijke beschrijvende namen voor je commit messages
 - Zorg voor duidelijke illustraties; voeg labels in voor x en y as, zorg voor eenheden op de assen, een titel, en als dat niet gaat (bv omdat het uit tensorboard komt) zorg dan voor een duidelijke caption van de afbeelding waar dat wel wordt uitgelegd.
 - Laat zien dat je je vragen kort en bondig kunt beantwoorden. De antwoordstrategie "ik schiet met hagel en hoop dat het goede antwoord ertussen zit" levert minder punten op dan een kort antwoord waar je de essentie weet te vangen. 
 - nodig mij uit (github handle: raoulg) voor je repository. 
