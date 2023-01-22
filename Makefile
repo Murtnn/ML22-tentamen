@@ -10,6 +10,9 @@ runGRU:
 tune: 
 	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/02_tune.py
 
+tuneGRU: 
+	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/02_tune_GRU.py
+
 result: 
 	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/03_result.py
 
