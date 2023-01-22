@@ -227,6 +227,8 @@ class GRUmodelSearchSpace(BaseSearchSpace):
     dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.4, 0.05)
     batchsize: Union[int, SAMPLE_INT] = tune.qrandint(64, 182, 16)
 
+Experiment gestopt, aangezien ik deze de hele nacht laat runnen aantal epochs op 30 gezet.
+
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
 - reflecteer op de hypertuning. Wat werkt wel, wat werkt niet, wat vind je verrassend, wat zijn trade-offs die je ziet in de hypertuning, wat zijn afwegingen bij het kiezen van een uiteindelijke hyperparametersetting.
