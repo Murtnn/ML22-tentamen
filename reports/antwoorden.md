@@ -149,12 +149,25 @@ Wat valt op: Na 13 epochs zit de accuracy al boven de 90%. Vervolgens is er na 2
 - Aantal lagen = 6
 - Dropout = 0.3
 
-Wat valt op: De tweede versie van het GRUmodel lijkt nog sneller en beter te leren dan de eerste educated guess. Na slechts 8 epochs zit de accuracy al boven de 90%. Uiteindelijk haalt het model een accuracy van rond de 96%. Net als in de eerste test wordt opgegeven moment de learningrate verlaagd tot 0.0009 om verder te kunnen leren. Door dat dit model sneller leert, wordt de learningrate al bij epoch 32 verlaagd. Net als in de eerste run is het model niet aan het overfitten, wel is te zien dat deze run relatief minder aan het overfitten is, ookal gebeurd het nu bijna niet. Een grotere hidden size en aantal lagen lijkt goed te werken om de accuracy te verhogen.
+Wat valt op: De tweede versie van het GRUmodel lijkt nog sneller en beter te leren dan de eerste educated guess. Na slechts 8 epochs zit de accuracy al boven de 90%. Uiteindelijk haalt het model een accuracy van rond de 96 a 97%. Net als in de eerste test wordt opgegeven moment de learningrate verlaagd tot 0.0009 om verder te kunnen leren. Door dat dit model sneller leert, wordt de learningrate al bij epoch 32 verlaagd. Net als in de eerste run is het model niet aan het overfitten, wel is te zien dat deze run relatief minder aan het overfitten is, ookal gebeurd het nu bijna niet. Een grotere hidden size en aantal lagen lijkt goed te werken om de accuracy te verhogen. 
 
-### Test1d.3 > Logs/20230122-
+### Test1d.3 > Logs/20230122-1411 > Test afgebroken
 - Hidden size = 256
 - Aantal lagen = 8
+- Dropout = 0.3
+
+Naar aanleiding van Test 1d.2 lijkt het erop dat door middel van het verhogen van de hidden size en het aantal lagen het model beter werd. Geen aanpassingen op de dropout gedaan. Echter werd het model hierdoor erg traag, om deze reden de run afgebroken. Op basis van de eerste paar epochs leek het model wel sneller te leren dan de twee voorgaande versies. Doordat de run is afgebroken, heb ik toch besloten om een volledige derde run te doen met de beste settings tot nu toe in combinatie met een verhoging van de dropout.
+
+### Test1d.4 > Logs/20230122-1420
+- Hidden size = 128
+- Aantal lagen = 6
 - Dropout = 0.5
+
+Net als voorgaande test runs wordt er goede accuracy gehaald van 95%. Het model duurt er een aantal langer over om boven de 90% te doen dan Test1d.2. Qua leervermogen worden wordt de learningrate na 39 epochs verlaagd, het model is dus later uitgeleerd. Ook met deze settings is model niet aan het overfitten. Wel kan er gesteld worden dat een lagere dropout beter is.
+
+Mijn conclusie op basis van deze tests valt het volgende mij op. Van alle modellen kwam de accuracy al redelijk snel boven de 95%, dit had ik niet verwacht aangezien er bij de eerdere opdracht gesteld werd dan een accuracy boven de 93% al goed is. Wat blijkt dat meer lagen zorgen voor een beter resultaat maar wel een slechtere performance (run time). Voor het opvolgend hypertunen ga ik dus niet meer lagen toevoegen dan 6 gezien het anders te veel tijd gaat kosten. Wanneer er meer tijd was zou ik het zeker interessant vinden om dit verder te onderzoeken. Wat tevens op viel dat mijn eerste educated guess aardig goed was qua parameters, echter lijkt een hogere hidden size beter. Hiermee ga ik verder experimenteren tijdens het hypertunen.
+
+VISUALS NOG TOEVOEGEN UIT TENSORBOARD!
 
 
 
