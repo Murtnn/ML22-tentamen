@@ -142,14 +142,19 @@ Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de 
 - Aantal lagen = 4
 - Dropout = 0.3
 
-Na ongeveer 25/30 epochs is er al een accuracy van 95% behaald.
-Learningrate valt na 40 epochts helemaal terug, wat betekent dat het model op die learningrate niets meer aan het leren was.
-Model is niet aan het overfitten: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
+Wat valt op: Na 13 epochs zit de accuracy al boven de 90%. Vervolgens is er na 25/30 epochs al een accuracy van 95% behaald. Dit betreft al een hele goede accuracy. Daarnaast valt op dat de learningrate na 40 epochts terugvalt, wat betekent dat het model op die learningrate niets meer aan het leren was. Verder positief is dat het model is niet aan het overfitten is: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
 
 ### Test1d.2 > Logs/20230122-1322
 - Hidden size = 128
 - Aantal lagen = 6
 - Dropout = 0.3
+
+Wat valt op: De tweede versie van het GRUmodel lijkt nog sneller en beter te leren dan de eerste educated guess. Na slechts 8 epochs zit de accuracy al boven de 90%. Uiteindelijk haalt het model een accuracy van rond de 96%. Net als in de eerste test wordt opgegeven moment de learningrate verlaagd tot 0.0009 om verder te kunnen leren. Door dat dit model sneller leert, wordt de learningrate al bij epoch 32 verlaagd. Net als in de eerste run is het model niet aan het overfitten, wel is te zien dat deze run relatief minder aan het overfitten is, ookal gebeurd het nu bijna niet. Een grotere hidden size en aantal lagen lijkt goed te werken om de accuracy te verhogen.
+
+### Test1d.3 > Logs/20230122-
+- Hidden size = 256
+- Aantal lagen = 8
+- Dropout = 0.5
 
 
 
