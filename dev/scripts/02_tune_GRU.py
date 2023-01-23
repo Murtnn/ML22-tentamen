@@ -36,7 +36,7 @@ def train(config: Dict) -> None:
         eval_steps=len(teststreamer),
         tunewriter=True,
     )
-# epoch voor eerste test op 3 gezet (was30)
+
 
 if __name__ == "__main__":
     ray.init()

@@ -22,8 +22,6 @@ if __name__ == "__main__":
         ),
     ]
 
-# epoch van 50 op 10 gezet. Later terugzetten.
-
     for config in configs:
         model = GRUmodel(config.dict())  # type: ignore
 
