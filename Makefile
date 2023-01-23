@@ -7,6 +7,9 @@ run:
 runGRU:	
 	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/01_model_GRU_design.py
 
+runBEST:	
+	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/2c_model_design.py
+
 tune: 
 	export PYTHONPATH="$$HOME/code/tentamen" ;poetry run python dev/scripts/02_tune.py
 

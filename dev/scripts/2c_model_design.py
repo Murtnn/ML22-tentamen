@@ -13,20 +13,20 @@ if __name__ == "__main__":
 
     trainstreamer, teststreamer = datasets.get_arabic(presets)
 
-    from tentamen.model import Linear
-    from tentamen.settings import LinearConfig
+    from tentamen.model import GRUmodel
+    from tentamen.settings import GRUmodelConfig
 
     configs = [
-        LinearConfig(
-            input=13, output=20, tunedir=presets.logdir, h1=100, h2=10, dropout=0.5
+        GRUmodelConfig(
+            input=13, output=20, tunedir=presets.logdir, hidden_size=220, num_layers=6, dropout=0.15, batchsize=96
         ),
     ]
 
     for config in configs:
-        model = Linear(config.dict())  # type: ignore
+        model = GRUmodel(config.dict())  # type: ignore
 
         trainedmodel = trainloop(
-            epochs=50,
+            epochs=20,
             model=model,  # type: ignore
             optimizer=torch.optim.Adam,
             learning_rate=1e-3,
