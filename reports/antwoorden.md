@@ -305,7 +305,7 @@ In eerste instantie had ik het model op 15 epochs gezet, echter werd er toen ik 
 # <b>ML: Antwoord 3 </b>
 
 - Zoals tijdens de laatste les is aangegeven heb ik de repository geforkt en ben ik hierin verder gaan werken.
-- make format && make lint > eerst zelf nalopen en dan laten runnen
+- make format && make lint beide laten runnen, zorgde voor slechts minimale aanpassingen.
 - Ik heb gedurende het werken aan het tentamen zo gestructureerd mogelijk mijn wijzigingen in git proberen bij te houden en met regelmaat te pushen. In het begin ging het niet helemaal vlekkeloos, te veel veranderingen tegelijk met dezelfde message, maar verderop in het proces werd dit beter.
 - Illustraties heb ik voornamelijk gemaakt via het Tensorboard, waar nodig heb ik deze visuals verder toegelicht.
 - Geprobeerd zoveel mogelijk met scherp te schieten. ;)
