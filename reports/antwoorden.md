@@ -264,7 +264,7 @@ De volgende settings hebben het beste resultaat behaald:
 - batchsize = 96
 - <b>Accuracy 96,69%</b>
 
-De verwachting is bevestigd door dit resultaat. Een hoge hidden_size en hogere aantal lagen geeft een beter resultaat, echter gaat dit wel ten kosten van de performance (run time) van het model. Wat tevens op valt dat het model in geen van de gevallen echt gaan overfitten is. Bij een hoger aantal epochs loopt de test/loss een klein beetje omhoog. Na ongeveer 15 a 20 epochs leert het model weinig meer bij en heeft het dus ook geen toegevoegde waarde meer om langer door te laten draaien. Daarnaast is een iets lagere batchsize beter voor zo'n relatief kleine dataset doordat het dan langer duurt voordat alles een keer langs is geweest. Bij een grotere batchsize is er een grotere risico dat het model de data onthoudt.
+De verwachting is bevestigd door dit resultaat. Een hoge hidden_size en hogere aantal lagen geeft een beter resultaat, echter gaat dit wel ten kosten van de performance (run time) van het model. Wat tevens op valt dat het model in geen van de gevallen echt gaan overfitten is. Bij een hoger aantal epochs loopt de test/loss een klein beetje omhoog. Na ongeveer 15 a 20 epochs leert het model weinig meer bij en heeft het dus ook geen toegevoegde waarde meer om langer door te laten draaien. Daarnaast is een iets lagere batchsize beter voor zo'n relatief kleine dataset doordat het dan langer duurt voordat alles een keer is gezien door het model. Bij een grotere batchsize is er een grotere risico dat het model de data onthoudt.
 
 ### 2c
 - Zorg dat jouw prijswinnende settings in een config komen te staan in `settings.py`, en train daarmee een model met een optimaal aantal epochs, daarvoor kun je `01_model_design.py` kopieren en hernoemen naar `2c_model_design.py`.
@@ -284,6 +284,15 @@ In eerste instantie had ik het model op 15 epochs gezet, echter werd er toen ik 
   </p>
 </figure>
 
+<figure>
+  <p align = "center">
+    <img src="img/PrijswinnaarLoss.png" style="width:75%">
+    <figcaption align="center">
+      <b> Fig 2c.2 Resultaat beste settings - LossTrain vs LossTest.</b> <i>Uit deze visual is te herleiden dat het model zo goed als niet aan het overfitten is.</i>
+    </figcaption>
+  </p>
+</figure>
+
 ## Vraag 3
 ### 3a
 - fork deze repository.
@@ -292,3 +301,12 @@ In eerste instantie had ik het model op 15 epochs gezet, echter werd er toen ik 
 - Zorg voor duidelijke illustraties; voeg labels in voor x en y as, zorg voor eenheden op de assen, een titel, en als dat niet gaat (bv omdat het uit tensorboard komt) zorg dan voor een duidelijke caption van de afbeelding waar dat wel wordt uitgelegd.
 - Laat zien dat je je vragen kort en bondig kunt beantwoorden. De antwoordstrategie "ik schiet met hagel en hoop dat het goede antwoord ertussen zit" levert minder punten op dan een kort antwoord waar je de essentie weet te vangen. 
 - nodig mij uit (github handle: raoulg) voor je repository. 
+
+# <b>ML: Antwoord 3 </b>
+
+- Zoals tijdens de laatste les is aangegeven heb ik de repository geforkt en ben ik hierin verder gaan werken.
+- make format && make lint > eerst zelf nalopen en dan laten runnen
+- Ik heb gedurende het werken aan het tentamen zo gestructureerd mogelijk mijn wijzigingen in git proberen bij te houden en met regelmaat te pushen. In het begin ging het niet helemaal vlekkeloos, te veel veranderingen tegelijk met dezelfde message, maar verderop in het proces werd dit beter.
+- Illustraties heb ik voornamelijk gemaakt via het Tensorboard, waar nodig heb ik deze visuals verder toegelicht.
+- Geprobeerd zoveel mogelijk met scherp te schieten. ;)
+- Zodra ik alles af heb zal ik je mailen en vervolgens uitnodigen voor mijn repository.
