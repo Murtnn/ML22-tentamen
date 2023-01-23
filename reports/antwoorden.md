@@ -15,7 +15,7 @@ De dropout staat op 0.5, hij heeft in een blog gelezen dat dit de beste settings
 - Wat vind je van de architectuur die hij heeft uitgekozen (een Neuraal netwerk met drie Linear layers)? Wat zijn sterke en zwakke kanten van een model als dit in het algemeen? En voor dit specifieke probleem?
 - Wat vind je van de keuzes die hij heeft gemaakt in de LinearConfig voor het aantal units ten opzichte van de data? En van de dropout?
 
-# ML: Antwoord 1a
+# <b>ML: Antwoord 1a</b>
 Het lijkt een regressie probleem doordat er onder andere cijfers voorspeld dienen te worden, maar het betreft een classificatie probleem, het voorspellen van 20 classes: cijfers 0 t/m 9 van mannen en vrouwen.
 
 Een neuraal netwerk met meerdere lineaire lagen is een goede architectuur om mee te starten (baseline). Dit type model is geschikt voor zowel regressie als classificatie problemen en wordt veelal gebruikt voor beeld- en taalclassificatie.
@@ -62,7 +62,7 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Hoe had hij dit ook kunnen oplossen?
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
-# ML: Antwoord 1b
+# <b>ML: Antwoord 1b</b>
 Het effect van 'x.mean(dim=1)' is dat het aantal dimensies wordt gereduceerd. De tijdsdimensie kan verschillende lengtes hebben, het ene cijfer duurt langer om uit gesproken te worden dan de ander. Door alleen het gemiddelde te nemen wordt de tijdsdimensie gereduceerd, hadden we dit niet gedaan dan had het neurale netwerk de gehele tijdserie van elke sample moeten verwerken wat er voorzorgt dat het trainingsproces veel langzamer wordt. Het netwerk krijgt te veel features om te verwerken waardoor het moeilijker wordt om van de data te leren. Tevens wordt de het toepassen van x.mean(dim=1) ook de ruis verminderd, die ontstaat door de verschillende lengtes van de tijdsdimensie.
 
 Een alternatief voor het reduceren van de dimensies is het toepassen van een flatten. Door flatten wordt alle informatie uit de dimensies platgeslagen tot een reeks. Echter door het toepassen van flatten gaan er veel kenmerken van tijdserie verloren. Daarom is het toepassen van flatten niet optimaal voor het verwerken van tijdseries.
@@ -74,7 +74,7 @@ Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitlegg
 - Geef vervolgens een indicatie en motivatie voor het aantal units/filters/kernelsize etc voor elke laag die je gebruikt, en hoe je omgaat met overgangen (bv van 3 naar 2 dimensies). Een indicatie is bijvoorbeeld een educated guess voor een aantal units, plus een boven en ondergrens voor het aantal units. Met een motivatie laat je zien dat jouw keuze niet een random selectie is, maar dat je 1) andere problemen hebt gezien en dit probleem daartegen kunt afzetten en 2) een besef hebt van de consquenties van het kiezen van een range.
 - Geef aan wat jij verwacht dat de meest veelbelovende architectuur is, en waarom (opnieuw, laat zien dat je niet random getallen noemt, of keuzes maakt, maar dat jij je keuze baseert op ervaring die je hebt opgedaan met andere problemen).
 
-# ML: Antwoord 1c
+# <b>ML: Antwoord 1c</b>
 De verschillende architecturen die dit problemen zijn zoals eerder benoemd de volgende:
 - Simple RNN: Basis model, echter moeite met geheugen.
 - LSTM: Heeft meer parameters met 3 gates en 2 hidden states, dus een meer complex model.
@@ -129,14 +129,14 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
   </p>
 </figure>
 
-# ML: Antwoord 1d
+# <b>ML: Antwoord 1d</b>
 In model.py file heb ik nieuw model toegevoegd: class 'GRUmodel', hierin is de gebruikte architectuur te vinden. Tevens heb ik in de settings.py file de config voor het model toegevoegd: class 'GRUmodelConfig', hierin worden het type van de verwachtte input geconfigureerd. Om het GRUmodel te runnen en de architectuur van het initiele model(01_model_design.py) te behouden heb ik een nieuw script aangemaakt (01_model_GRU_design.py). Om dit model losstaand van het eerste model te laten runnen heb ik de Makefile moeten aanpassen zodat ik een 'make' commando kon geven voor alle dit model: 'make runGRU'. Voor het handmatig hypertunen ben ik gaan experimenteren met de volgende parameters: hidden_size, aantal lagen en dropout. De overige parameters hebben de volgende default settings van mij meegekregen:
 - Batchsize = 128
 - Learningrate = 1e -3
 - Optimizer = Adam
 - Loss = CrossEntropyLoss
 
-### Experiment 1d.1 Logs/20230121-2220 > Gele lijn in onderstaande figuren.
+### <b>Experiment 1d.1 Logs/20230121-2220 > Gele lijn in onderstaande figuren.</b>
 Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de educated guess: 
 - Hidden size = 64
 - Aantal lagen = 4
@@ -144,21 +144,21 @@ Zoals in in vraag 1c benoemd heb ik in eerste instantie het model gerund met de 
 
 Wat valt op: Na 13 epochs zit de accuracy al boven de 90%. Vervolgens is er na 25/30 epochs al een accuracy van 95% behaald. Dit betreft al een hele goede accuracy. Daarnaast valt op dat de learningrate na 40 epochts terugvalt, wat betekent dat het model op die learningrate niets meer aan het leren was. Het model heeft ingestelde patience van 10, wat betekent dat als het model gedurende 10 epochs niets leert het de learningrate laat zakken. Verder positief is dat het model is niet aan het overfitten is: Zowel de Loss/test als de Loss/train curve zitten op hetzelfde niveau.
 
-### Experiment 1d.2 > Logs/20230122-1322 > Paarse lijn in onderstaande figuren.
+### <b>Experiment 1d.2 > Logs/20230122-1322 > Paarse lijn in onderstaande figuren.</b>
 - Hidden size = 128
 - Aantal lagen = 6
 - Dropout = 0.3
 
 Wat valt op: De tweede versie van het GRUmodel lijkt nog sneller en beter te leren dan de eerste educated guess. Na slechts 8 epochs zit de accuracy al boven de 90%. Uiteindelijk haalt het model een accuracy van rond de 96 a 97%. Net als in de eerste experiment wordt opgegeven moment de learningrate verlaagd tot 0.0009 om verder te kunnen leren. Door dat dit model sneller leert, wordt de learningrate al bij epoch 32 verlaagd. Net als in de eerste run is het model niet aan het overfitten, wel is te zien dat deze run relatief minder aan het overfitten is, ookal gebeurd het nu bijna niet. Een grotere hidden size en aantal lagen lijkt goed te werken om de accuracy te verhogen. 
 
-### Experiment 1d.3 > Logs/20230122-1411 > Experiment afgebroken > Groene lijn in onderstaande figuren.
+### <b>Experiment 1d.3 > Logs/20230122-1411 > Experiment afgebroken > Groene lijn in onderstaande figuren.</b>
 - Hidden size = 256
 - Aantal lagen = 8
 - Dropout = 0.3
 
 Naar aanleiding van experiment 1d.2 lijkt het erop dat door middel van het verhogen van de hidden size en het aantal lagen het model beter werd. Geen aanpassingen op de dropout gedaan. Echter werd het model hierdoor erg traag, om deze reden de run afgebroken. Op basis van de eerste paar epochs leek het model wel sneller te leren dan de twee voorgaande versies. Doordat de run is afgebroken, heb ik toch besloten om een volledige derde run te doen met de beste settings tot nu toe in combinatie met een verhoging van de dropout.
 
-### Experiment 1d.4 > Logs/20230122-1420 > Oranje lijn in onderstaande figuren.
+### <b>Experiment 1d.4 > Logs/20230122-1420 > Oranje lijn in onderstaande figuren.</b>
 - Hidden size = 128
 - Aantal lagen = 6
 - Dropout = 0.5
@@ -175,6 +175,7 @@ Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle
     </figcaption>
   </p>
 </figure>
+<i>Uit bovenstaande visual is te zien dat accuracy van experiment 1d.2 het snelst de hoogste accuracy bereikt. Ook is te zien dat de uiteindelijke accuracy voor experiment 1d.2 het hoogste. Dit is ook te herleiden op basis van de logs in map: '01.Log'.</i>
 
 <figure>
   <p align = "center">
@@ -184,7 +185,7 @@ Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle
     </figcaption>
   </p>
 </figure>
-
+<I>Uit bovenstaande visual is de patience voor elk van deze experimenten duidelijk zichtbaar. Na 10 epochs van niets leren wordt de learning rate verlaagd. Op basis van de paarse lijn kan er gesteld worden dat het model na 22 epochs niet meer leert met een learningrate van 0.001.</i>
 
 <figure>
   <p align = "center">
@@ -194,6 +195,7 @@ Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle
     </figcaption>
   </p>
 </figure>
+<i>Uit bovenstaande visual is te zien dat het model in geen van alle uitgevoerde experimenten is gaan overfitten, ondanks dat het model heeft gerund op 50 epochs. Door dit hoge aantal epochs is de kans op overfitten groot, maar dit is uiteindelijk niet gebeurd.</i>
 
 ## Vraag 2
 Een andere collega heeft alvast een hypertuning opgezet in `dev/scripts/02_tune.py`.
