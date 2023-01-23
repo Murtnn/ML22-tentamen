@@ -82,7 +82,7 @@ De verschillende architecturen die dit problemen zijn zoals eerder benoemd de vo
 
 <figure>
   <p align = "center">
-    <img src="img/Architecturen.png" style="width:100%">
+    <img src="img/Architecturen.png" style="width:75%">
     <figcaption align="center">
       <b> Fig 1c. Overzicht Architecturen</b>
     </figcaption>
@@ -171,7 +171,7 @@ Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle
   <p align = "center">
     <img src="img/HandmatigMetricAccuracy.png" style="width:75%">
     <figcaption align="center">
-      <b> Fig 1d.1 Metric Accuracy.</b>
+      <b> Fig 1d.1 Metric Accuracy.</b> x-as = Accuracy en y-as = Aantal epochs
     </figcaption>
   </p>
 </figure>
@@ -181,7 +181,7 @@ Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle
   <p align = "center">
     <img src="img/HandmatigLearningRate.png" style="width:75%">
     <figcaption align="center">
-      <b> Fig 1d.2 Drop LearningRates.</b>
+      <b> Fig 1d.2 Drop LearningRates.</b> x-as = LearningRate en y-as = Aantal epochs
     </figcaption>
   </p>
 </figure>
@@ -191,7 +191,7 @@ Mijn conclusie op basis van deze experimenten valt het volgende mij op. Van alle
   <p align = "center">
     <img src="img/HandmatigLoss.png" style="width:75%">
     <figcaption align="center">
-      <b> Fig 1d.3 LossTrain/LossTest.</b>
+      <b> Fig 1d.3 LossTrain/LossTest.</b> x-as = Loss/test & Loss/train en y-as = Aantal epochs
     </figcaption>
   </p>
 </figure>
@@ -209,63 +209,6 @@ Implementeer de hypertuning voor jouw architectuur:
 - maak een zoekruimte aan met behulp van pydantic (naar het voorbeeld van LinearSearchSpace), maar pas het aan voor jouw model.
 - Licht je keuzes toe: wat hypertune je, en wat niet? Waarom? En in welke ranges zoek je, en waarom? Zie ook de [docs van ray over search space](https://docs.ray.io/en/latest/tune/api_docs/search_space.html#tune-sample-docs) en voor [rondom search algoritmes](https://docs.ray.io/en/latest/tune/api_docs/suggestion.html#bohb-tune-search-bohb-tunebohb) voor meer opties en voorbeelden.
 
-# ML: Antwoord 2a
-Geen aanpassing aan het model gedaan naar aanleiding van vraag 1d, GRUmodel werkt goed voor deze dataset.
-Om de basiscode in file '02_tune.py' voor het lineaire model te behouden heb ik hiervan een kopie gemaakt en deze gewijzigd zodat deze kan runnen op GRUmodel. Ook weer hiervoor een nieuw command aangemaakt in de Makefile: 'make tuneGRU'. In de settingsfile een GRUmodelSearchSpace toegevoegd met searchspace op basis van het handmatig hypertunen.
-
-class GRUmodelSearchSpace(BaseSearchSpace):
-    hidden_size: (128, 256)
-    num_layers: (2, 6)
-    dropout: (0.0, 0.3)
-
-Search gaat nu nog erg random, dit ga ik vervolgens verder structureren. Tevens kijken of ik batchsize als variabele parameter kan toevoegen, ik verwacht dat dit ook impact heeft op het resultaat. Batch size: de totale dataset is 8800, batchsize default is 128, lijkt mij aan de hoge kant voor zon kleine dataset.
-Door hiddensize te structeren door stappen van 32 te laten nemen, numlayers stappen van 2 en dropout range verkleinen en stappen van 0.05. Vervolgens experiment op 10 epochs gerund: train_2023-01-22_16-59-21
-Deze geeft aan dat op 10 epochs de volgende settings optimaal zijn: hidden size 224, num layers 6 en dropout 0.0. Dropout van 0.0 is niet logisch, gezien de resultaten van het handmatig hypertunen op 0.3 en accuracy van bijna 97%.Hierom met de volgende settings opnieuw laten hypertunen:
-hidden size tussen 200 en 260 met stappen van 10, numlayers tussen 4 en 6 en dropout tussen 0.1 en 0.4 met stappen van 0.05. Epochs op 10. In dit experiment ook de batchsize meegenomen: tussen 64 en 182 met stappen van 16.
-
-class GRUmodelSearchSpace(BaseSearchSpace):
-    hidden_size: Union[int, SAMPLE_INT] = tune.qrandint(200, 260, 10)
-    num_layers: Union[int, SAMPLE_INT] = tune.qrandint(4, 6, 1)
-    dropout: Union[float, SAMPLE_FLOAT] = tune.quniform(0.1, 0.4, 0.05)
-    batchsize: Union[int, SAMPLE_INT] = tune.qrandint(64, 182, 16)
-
-Experiment gestopt, aangezien ik deze de hele nacht laat runnen aantal epochs op 30 gezet.
-
-Resultaat run: train_2023-01-22_20-38-36
-
- Bracket(Max Size (n)=1, Milestone (r)=21, completed=71.3%): {TERMINATED: 20} 
-Resources requested: 0/4 CPUs, 0/0 GPUs, 0.0/8.7 GiB heap, 0.0/4.35 GiB objects
-Current best trial: ee4947ea with test_loss=0.1634776642655625 and parameters={'input': 13, 'output': 20, 'tunedir': PosixPath('/home/azureuser/code/ML22-tentamen/logs'), 'hidden_size': 220, 'num_layers': 6, 'dropout': 0.15000000000000002, 'batchsize': 96}
-Result logdir: /home/azureuser/code/ML22-tentamen/logs/train_2023-01-22_20-38-36
-Number of trials: 20/20 (20 TERMINATED)
-+----------------+------------+----------------+-------------+-----------+---------------+--------------+--------+------------------+------+------------+
-| Trial name     | status     | loc            |   batchsize |   dropout |   hidden_size |   num_layers |   iter |   total time (s) |   ts |   Accuracy |
-|----------------+------------+----------------+-------------+-----------+---------------+--------------+--------+------------------+------+------------|
-| train_00cd55f8 | TERMINATED | 10.0.0.7:23860 |         160 |      0.15 |           240 |            4 |      9 |        1663.8    |    0 |  0.945772  |
-| train_60341e2d | TERMINATED | 10.0.0.7:23860 |         128 |      0.3  |           250 |            5 |      3 |         848.439  |    0 |  0.356618  |
-| train_35b22ba9 | TERMINATED | 10.0.0.7:23862 |         112 |      0.3  |           250 |            6 |      3 |        1030.57   |    0 |  0.650735  |
-| train_b7989d67 | TERMINATED | 10.0.0.7:11853 |         176 |      0.25 |           250 |            5 |      1 |         222.824  |      |  0.0799632 |
-| train_0b558025 | TERMINATED | 10.0.0.7:11771 |          96 |      0.25 |           240 |            6 |      1 |         225.198  |      |  0.0988051 |
-| train_16e7b83f | TERMINATED | 10.0.0.7:23873 |         128 |      0.25 |           220 |            4 |      3 |         537.207  |    0 |  0.534467  |
-| train_31095521 | TERMINATED | 10.0.0.7:39910 |         112 |      0.3  |           240 |            5 |      9 |        1970.85   |    0 |  0.935202  |
-| train_78005401 | TERMINATED | 10.0.0.7:11853 |         144 |      0.25 |           250 |            6 |      3 |        1020.5    |    0 |  0.491728  |
-| train_bea33c4a | TERMINATED | 10.0.0.7:11849 |         128 |      0.3  |           230 |            5 |      1 |         186.283  |      |  0.112592  |
-| train_5d3243aa | TERMINATED | 10.0.0.7:11771 |         128 |      0.1  |           220 |            4 |      1 |         133.871  |      |  0.0928309 |
-| train_80cb6e84 | TERMINATED | 10.0.0.7:11853 |         112 |      0.35 |           250 |            4 |      1 |         165.282  |      |  0.0997243 |
-| train_6779ff56 | TERMINATED | 10.0.0.7:23860 |         112 |      0.1  |           210 |            5 |      3 |         637.579  |    0 |  0.615809  |
-| train_ee4947ea | TERMINATED | 10.0.0.7:39912 |          96 |      0.15 |           220 |            6 |     30 |        4419.73   |    0 |  0.966912  |
-| train_1291dfd3 | TERMINATED | 10.0.0.7:11849 |          80 |      0.35 |           210 |            4 |      1 |         123.398  |      |  0.0882353 |
-| train_bbdca54e | TERMINATED | 10.0.0.7:11853 |         160 |      0.35 |           200 |            5 |      1 |         144.028  |      |  0.0790441 |
-| train_87656b8f | TERMINATED | 10.0.0.7:11771 |         128 |      0.25 |           240 |            6 |      1 |         221.288  |      |  0.0804228 |
-| train_426e1889 | TERMINATED | 10.0.0.7:11849 |         176 |      0.25 |           220 |            6 |      1 |         207.913  |      |  0.089614  |
-| train_62a94754 | TERMINATED | 10.0.0.7:23873 |         160 |      0.2  |           240 |            4 |      3 |         484.682  |    0 |  0.558824  |
-| train_396b1798 | TERMINATED | 10.0.0.7:11852 |         176 |      0.2  |           240 |            4 |      1 |         148.118  |      |  0.108456  |
-| train_aa23246d | TERMINATED | 10.0.0.7:11849 |         176 |      0.15 |           250 |            4 |      1 |          93.4361 |      |  0.0716912 |
-+----------------+------------+----------------+-------------+-----------+---------------+--------------+--------+------------------+------+------------+
-
-
-100%|██████████| 30/30 [1:01:35<00:00, 123.19s/it]
-2023-01-22 22:18:06,111 INFO tune.py:762 -- Total run time: 5969.54 seconds (5969.27 seconds for the tuning loop).
 
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
@@ -273,8 +216,73 @@ Number of trials: 20/20 (20 TERMINATED)
 
 Importeer de afbeeldingen in jouw antwoorden, reflecteer op je experiment, en geef een interpretatie en toelichting op wat je ziet.
 
+# <b>ML: Antwoorden 2a en 2b </b>
+Naar aanleiding van het handmatig hypertunen van vraag 1d geen wijzigingen meer in het gekozen model doorgevoerd. Het GRUmodel werkt erg goed voor deze dataset.
+
+### <b> Hypertuner</b>
+Om de basiscode in file '02_tune.py' voor het lineaire model te behouden heb ik hiervan een kopie gemaakt en deze gewijzigd zodat deze kan runnen op het GRUmodel (02_tune_GRU.py). Voor het runnen van deze hypertuner ook een nieuw command aangemaakt in de Makefile: 'make tuneGRU'. In de settingsfile een GRUmodelSearchSpace toegevoegd met searchspace op basis van het handmatig hypertunen:
+
+class GRUmodelSearchSpace(BaseSearchSpace):
+    hidden_size: (128, 256)
+    num_layers: (2, 6)
+    dropout: (0.0, 0.3)
+
+Op basis van deze settings gaat de search erg random. Door deze te structeren door het gebruik van tune.qrandint en tune.quniform. Hierdoor kan de grote van elke stap bepaald worden. Bijvoorbeeld door het toevoegen van 32 aan de range van hidden size (128, 256) word de random integers een veelvoud van 32. Zo wordt het overzichtelijker om vast te stellen in welke range bijvoorbeeld de hidden size het beste resultaat geeft. Dit veelvoud is ook toegevoegd bij het zoeken naar de juiste dropout (veelvoud van 0.05) en aantal lagen(veelvoud van 2). Vervolgens ben ik het experiment gaan runnen op 10 epochs, aangezien op basis van dit aantal epochs de betere settings inzichtelijk worden.
+
+<figure>
+  <p align = "center">
+    <img src="img/EersteRunHypertuner.png" style="width:75%">
+    <figcaption align="center">
+      <b> Fig 2ab.1 Eerste Run Hypertuner.</b> <i>Onder de parallel_coordinates-visual zijn de settings zichtbaar die in deze run de hoogste accuracy heeft gehaald (rode lijn).</i>
+    </figcaption>
+  </p>
+</figure>
+
+Het hypertunen gaat door te werken met een veelvoud meer gestructureerd dan wanneer er gerund wordt op volledig random integers/floats. Uit deze run blijkt dat de volgende settings optimaal zijn: hidden size = 224, aantal lagen = 6 en dropout = 0.0. Een dropout van 0.0 is niet logisch aangezien er bij het handmatig hypertunen bijna een accuracy van 97% werd behaald met een dropout van 0.3. Door de train_loss en test_loss te analyseren is te zien dat het model niet aan het overfitten was. Zoals verwacht is een hogere hiddensize en een hoger aantal lagen een betere setting. Wat tevens nogmaals bevestigd wordt is dat de run time niet snel is, dit komt door het hoge aantal lagen. Hierdoor ga ik ook neit verder experimenteren met meer lagen dan zes. Om verder de beste settings te kunnen analyseren ga ik het model opnieuw laten runnen. Tevens wil ik bij deze nieuwe run de batchsize als variabele setting toevoegen. Tijdens de lessen is duidelijk geworden dat deze parameter ook erg van belang is om het optimale resultaat te behalen. Ik vind een batchsize van 128 op een dataset van 8800 redelijk aan de hoge kant.
+
+Op basis van voorgaande experimenten verwacht ik dat het model de volgende settings een beter resultaat behaald:
+- hidden_size: (200, 260, 10) > Verwachting dat de hidden size hoog is.
+- num_layers: (4, 6, 1) > Verwachting de aantal lagen ook hoog is.
+- dropout: (0.1, 0.4, 0.05) > Verwachting dat er een hogere dropout is dan 0.1 en niet hoger dan 0.4.
+- batchsize: (64, 182, 16) > Verwachting dat batchsize lager zal dan de default, maar een grotere range meegegeven om dit bevestigd te krijgen.
+
+Bovenstaande heb ik in de nacht laten runnen om deze reden heb ik aantal epochs op 30 gezet. Op basis van deze 'nachtrun' is het volgende resultaat behaald.
+
+<figure>
+  <p align = "center">
+    <img src="img/ResultaatHypertuner.png" style="width:75%">
+    <figcaption align="center">
+      <b> Fig 2ab.2 Resultaat Hypertuner.</b> <i>Onder de parallel_coordinates-visual zijn de settings zichtbaar die in deze run de hoogste accuracy heeft gehaald (rode lijn).</i>
+    </figcaption>
+  </p>
+</figure>
+
+De volgende settings hebben het beste resultaat behaald:
+- hidden_ size = 220
+- num_layers = 6
+- dropout = 0.15
+- batchsize = 96
+- <b>Accuracy 96,69%</b>
+
+De verwachting is bevestigd door dit resultaat. Een hoge hidden_size en hogere aantal lagen geeft een beter resultaat, echter gaat dit wel ten kosten van de performance (run time) van het model. Wat tevens op valt dat het model in geen van de gevallen echt gaan overfitten is. Bij een hoger aantal epochs loopt de test/loss een klein beetje omhoog. Na ongeveer 15 a 20 epochs leert het model weinig meer bij en heeft het dus ook geen toegevoegde waarde meer om langer door te laten draaien. Daarnaast is een iets lagere batchsize beter voor zo'n relatief kleine dataset doordat het dan langer duurt voordat alles een keer langs is geweest. Bij een grotere batchsize is er een grotere risico dat het model de data onthoudt.
+
 ### 2c
 - Zorg dat jouw prijswinnende settings in een config komen te staan in `settings.py`, en train daarmee een model met een optimaal aantal epochs, daarvoor kun je `01_model_design.py` kopieren en hernoemen naar `2c_model_design.py`.
+
+# <b>ML: Antwoord 2c </b>
+
+De beste settings vloeienvoort uit het GRUmodel. Dit model heb ik gekopieerd naar `2c_model_design.py`. In dit script heb ik direct de juiste configuraties meegegeven aan het model om vervolgens te laten runnen op een optimaal aantal epochs. Op basis van de gerunde experimenten zit het optimale epochts rond de 15 a 20 epochs. Hierna is de verbetering nihil. Om dit te script te runnen heb ik nieuw command aangemaakt: 'make runBEST'. 
+
+In eerste instantie had ik het model op 15 epochs gezet, echter werd er toen ik die liet runnen slechts een accuracy va 94% behaald. Ik weet dat dit een momentopname is, maar hierdoor het aantal epochs toch aangepast tot 20. Met dit aantal werd de 96% al met de 15e epoch behaald en is vervolgens niet verder gekomen dan die accuracy. Hierdoor het aantal epochs teruggezet op 15.
+
+<figure>
+  <p align = "center">
+    <img src="img/Prijswinnaar.png" style="width:75%">
+    <figcaption align="center">
+      <b> Fig 2c.1 Resultaat beste settings.</b> <i>Uit deze visual is goed te herleiden dat het optimaal aantal epochs op 15 zit.</i>
+    </figcaption>
+  </p>
+</figure>
 
 ## Vraag 3
 ### 3a
