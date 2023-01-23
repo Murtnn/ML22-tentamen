@@ -229,6 +229,42 @@ class GRUmodelSearchSpace(BaseSearchSpace):
 
 Experiment gestopt, aangezien ik deze de hele nacht laat runnen aantal epochs op 30 gezet.
 
+Resultaat run: train_2023-01-22_20-38-36
+
+ Bracket(Max Size (n)=1, Milestone (r)=21, completed=71.3%): {TERMINATED: 20} 
+Resources requested: 0/4 CPUs, 0/0 GPUs, 0.0/8.7 GiB heap, 0.0/4.35 GiB objects
+Current best trial: ee4947ea with test_loss=0.1634776642655625 and parameters={'input': 13, 'output': 20, 'tunedir': PosixPath('/home/azureuser/code/ML22-tentamen/logs'), 'hidden_size': 220, 'num_layers': 6, 'dropout': 0.15000000000000002, 'batchsize': 96}
+Result logdir: /home/azureuser/code/ML22-tentamen/logs/train_2023-01-22_20-38-36
+Number of trials: 20/20 (20 TERMINATED)
++----------------+------------+----------------+-------------+-----------+---------------+--------------+--------+------------------+------+------------+
+| Trial name     | status     | loc            |   batchsize |   dropout |   hidden_size |   num_layers |   iter |   total time (s) |   ts |   Accuracy |
+|----------------+------------+----------------+-------------+-----------+---------------+--------------+--------+------------------+------+------------|
+| train_00cd55f8 | TERMINATED | 10.0.0.7:23860 |         160 |      0.15 |           240 |            4 |      9 |        1663.8    |    0 |  0.945772  |
+| train_60341e2d | TERMINATED | 10.0.0.7:23860 |         128 |      0.3  |           250 |            5 |      3 |         848.439  |    0 |  0.356618  |
+| train_35b22ba9 | TERMINATED | 10.0.0.7:23862 |         112 |      0.3  |           250 |            6 |      3 |        1030.57   |    0 |  0.650735  |
+| train_b7989d67 | TERMINATED | 10.0.0.7:11853 |         176 |      0.25 |           250 |            5 |      1 |         222.824  |      |  0.0799632 |
+| train_0b558025 | TERMINATED | 10.0.0.7:11771 |          96 |      0.25 |           240 |            6 |      1 |         225.198  |      |  0.0988051 |
+| train_16e7b83f | TERMINATED | 10.0.0.7:23873 |         128 |      0.25 |           220 |            4 |      3 |         537.207  |    0 |  0.534467  |
+| train_31095521 | TERMINATED | 10.0.0.7:39910 |         112 |      0.3  |           240 |            5 |      9 |        1970.85   |    0 |  0.935202  |
+| train_78005401 | TERMINATED | 10.0.0.7:11853 |         144 |      0.25 |           250 |            6 |      3 |        1020.5    |    0 |  0.491728  |
+| train_bea33c4a | TERMINATED | 10.0.0.7:11849 |         128 |      0.3  |           230 |            5 |      1 |         186.283  |      |  0.112592  |
+| train_5d3243aa | TERMINATED | 10.0.0.7:11771 |         128 |      0.1  |           220 |            4 |      1 |         133.871  |      |  0.0928309 |
+| train_80cb6e84 | TERMINATED | 10.0.0.7:11853 |         112 |      0.35 |           250 |            4 |      1 |         165.282  |      |  0.0997243 |
+| train_6779ff56 | TERMINATED | 10.0.0.7:23860 |         112 |      0.1  |           210 |            5 |      3 |         637.579  |    0 |  0.615809  |
+| train_ee4947ea | TERMINATED | 10.0.0.7:39912 |          96 |      0.15 |           220 |            6 |     30 |        4419.73   |    0 |  0.966912  |
+| train_1291dfd3 | TERMINATED | 10.0.0.7:11849 |          80 |      0.35 |           210 |            4 |      1 |         123.398  |      |  0.0882353 |
+| train_bbdca54e | TERMINATED | 10.0.0.7:11853 |         160 |      0.35 |           200 |            5 |      1 |         144.028  |      |  0.0790441 |
+| train_87656b8f | TERMINATED | 10.0.0.7:11771 |         128 |      0.25 |           240 |            6 |      1 |         221.288  |      |  0.0804228 |
+| train_426e1889 | TERMINATED | 10.0.0.7:11849 |         176 |      0.25 |           220 |            6 |      1 |         207.913  |      |  0.089614  |
+| train_62a94754 | TERMINATED | 10.0.0.7:23873 |         160 |      0.2  |           240 |            4 |      3 |         484.682  |    0 |  0.558824  |
+| train_396b1798 | TERMINATED | 10.0.0.7:11852 |         176 |      0.2  |           240 |            4 |      1 |         148.118  |      |  0.108456  |
+| train_aa23246d | TERMINATED | 10.0.0.7:11849 |         176 |      0.15 |           250 |            4 |      1 |          93.4361 |      |  0.0716912 |
++----------------+------------+----------------+-------------+-----------+---------------+--------------+--------+------------------+------+------------+
+
+
+100%|██████████| 30/30 [1:01:35<00:00, 123.19s/it]
+2023-01-22 22:18:06,111 INFO tune.py:762 -- Total run time: 5969.54 seconds (5969.27 seconds for the tuning loop).
+
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
 - reflecteer op de hypertuning. Wat werkt wel, wat werkt niet, wat vind je verrassend, wat zijn trade-offs die je ziet in de hypertuning, wat zijn afwegingen bij het kiezen van een uiteindelijke hyperparametersetting.
