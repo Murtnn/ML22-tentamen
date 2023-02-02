@@ -12,5 +12,7 @@
 │   ├── img           <- image folder for report
 │   └── antwoorden.md    <- File with questions + place to put your answers
 └── src
+
+Auteur = Maarten Loeffen
 ```
 
